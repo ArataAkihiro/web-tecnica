@@ -8,7 +8,7 @@ export default defineAstroPaperConfig({
     author: "Sergio Montero",
     profile: "https://github.com/ArataAkihiro",
     ogImage: "default-og.jpg",
-    lang: "es",
+    lang: "en",
     timezone: "Europe/Madrid",
     dir: "ltr",
   },
