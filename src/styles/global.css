@@ -22,8 +22,11 @@
   }
 }
 
+/* ==========================================
+   NANO-TECH: Ampliar ancho útil en pantallas grandes
+   ========================================== */
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-5xl;
 }
 
 @utility app-layout {
@@ -32,10 +35,6 @@
 
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
-}
-
-:target {
-  scroll-margin-block: 1rem;
 }
 
 :target {
@@ -60,8 +59,8 @@ body::before {
   width: 100vw;
   height: 100vh;
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.04) 0%, transparent 40%);
   z-index: -1;
   pointer-events: none;
 }
