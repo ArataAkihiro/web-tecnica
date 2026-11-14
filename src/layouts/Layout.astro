@@ -138,22 +138,28 @@ const rssHref = getAssetPath("rss.xml");
           initDots();
         });
 
-        // Control de posición para ratón y dispositivos táctiles (móviles/Z Fold)
+        // Control de posición corregido mediante getBoundingClientRect para evitar desfases en PC y móvil
         const pointer = { x: -1000, y: -1000, active: false };
 
         window.addEventListener("mousemove", (e) => {
-          pointer.x = e.clientX;
-          pointer.y = e.clientY;
+          const rect = canvas.getBoundingClientRect();
+          pointer.x = e.clientX - rect.left;
+          pointer.y = e.clientY - rect.top;
           pointer.active = true;
         });
 
-        window.addEventListener("touchmove", (e) => {
+        // Eventos táctiles mejorados con frecuencia alta (touchstart + touchmove)
+        const updateTouch = (e: TouchEvent) => {
           if (e.touches.length > 0) {
-            pointer.x = e.touches[0].clientX;
-            pointer.y = e.touches[0].clientY;
+            const rect = canvas.getBoundingClientRect();
+            pointer.x = e.touches[0].clientX - rect.left;
+            pointer.y = e.touches[0].clientY - rect.top;
             pointer.active = true;
           }
-        }, { passive: true });
+        };
+
+        window.addEventListener("touchstart", updateTouch, { passive: true });
+        window.addEventListener("touchmove", updateTouch, { passive: true });
 
         window.addEventListener("touchend", () => {
           pointer.active = false;
@@ -219,10 +225,11 @@ const rssHref = getAssetPath("rss.xml");
 
             // Pulso de opacidad individual
             const pulse = Math.sin(time * dot.pulseSpeed + dot.pulseOffset);
-            const alpha = isDark ? 0.14 + pulse * 0.07 : 0.10 + pulse * 0.05;
+            const alpha = isDark ? 0.16 + pulse * 0.08 : 0.12 + pulse * 0.06;
 
-            ctx.fillStyle = dotColor + Math.max(0.04, alpha) + ")";
-            ctx.fillRect(dot.x - 1, dot.y - 1, 2, 2);
+            ctx.fillStyle = dotColor + Math.max(0.05, alpha) + ")";
+            // Puntos un pelín más grandes (3x3 en lugar de 2x2)
+            ctx.fillRect(dot.x - 1.5, dot.y - 1.5, 3, 3);
 
             // Conexión con el cursor del ratón o el dedo en la pantalla táctil
             const dx = pointer.x - dot.x;
