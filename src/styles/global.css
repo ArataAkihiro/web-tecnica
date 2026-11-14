@@ -42,7 +42,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Fondo, Cursor y Hover
+   NANO-TECH CUSTOM: Fondo Animado y Efectos
    ========================================== */
 
 body {
@@ -51,23 +51,49 @@ body {
   background-color: var(--background);
 }
 
-/* Fondo atmosférico avanzado con patrón de puntos tipo matriz */
-body::before {
+/* Fondo atmosférico con animación fluida de partículas de luz */
+body::before,
+body::after {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: 
-    radial-gradient(rgba(255, 107, 1, 0.08) 1px, transparent 1px),
-    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%);
-  background-size: 24px 24px, 100% 100%;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
   z-index: -1;
   pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: floatOrb 18s ease-in-out infinite alternate;
 }
 
-/* Estela luminosa / Cursor tecnológico */
+/* Orbe 1 (Tonos de acento según el tema) */
+body::before {
+  top: -10%;
+  left: -10%;
+  background: var(--accent);
+}
+
+/* Orbe 2 (Tonos secundarios/cianes) */
+body::after {
+  bottom: -10%;
+  right: -10%;
+  background: #38bdf8;
+  animation-delay: -9s;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(50px, 40px) scale(1.15);
+  }
+  100% {
+    transform: translate(-30px, 60px) scale(0.9);
+  }
+}
+
+/* Estela luminosa / Cursor tecnológico (Adaptable a ambos temas) */
 #nano-cursor-glow {
   pointer-events: none;
   position: fixed;
@@ -76,14 +102,21 @@ body::before {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 107, 1, 0.12) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 70%);
+  background: radial-gradient(circle, var(--accent) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 70%);
+  opacity: 0.18;
   transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s;
+  transition: width 0.3s, height: 0.3s;
   z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* En modo oscuro el blend mode cambia para que resalte con brillo */
+[data-theme="dark"] #nano-cursor-glow {
+  opacity: 0.25;
   mix-blend-mode: screen;
 }
 
-/* Efecto hover tecnológico fluido en los títulos de los posts */
+/* Efecto hover tecnológico fluido en títulos y enlaces */
 main a h2, main a h3, .post-card a {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -91,10 +124,10 @@ main a h2, main a h3, .post-card a {
 main a:hover h2, main a:hover h3 {
   color: var(--accent) !important;
   transform: translateX(4px);
-  text-shadow: 0 0 10px rgba(255, 107, 1, 0.3);
+  text-shadow: 0 0 10px var(--accent);
 }
 
-/* Elevación sutil de los bloques de artículos */
+/* Elevación sutil de las tarjetas de artículos */
 li {
   transition: transform 0.2s ease;
 }
