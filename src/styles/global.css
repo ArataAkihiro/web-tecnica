@@ -23,19 +23,37 @@
 }
 
 /* ==========================================
-   NANO-TECH: Márgenes laterales y centrado perfecto
+   NANO-TECH: Layout Amplio, Centrado y Limpio en PC
    ========================================== */
 @media (min-width: 1024px) {
-  /* Devolvemos el contenedor principal a su centrado natural con aire en los lados */
+  /* Ampliamos el contenedor base de la plantilla a un ancho óptimo de 64rem (~1024px) */
+  .max-w-3xl {
+    max-width: 64rem !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+
+  /* Forzamos que el contenido principal y la cabecera respiren simétricamente */
   main#main-content, 
   header {
-    width: 100% !important;
-    max-width: 56rem !important; /* Ancho de lectura óptimo (~900px) */
+    max-width: 64rem !important;
     margin-left: auto !important;
     margin-right: auto !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
     box-sizing: border-box;
+  }
+
+  /* Anulamos el posicionamiento absoluto del botón "Go back" para meterlo dentro de la caja */
+  .mx-auto.max-w-3xl div:has(> a[href]),
+  div.mx-auto.max-w-3xl > a {
+    position: relative !important;
+    left: 0 !important;
+    display: inline-block !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
@@ -48,7 +66,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas de Matriz, Cursor y Hover
+   NANO-TECH CUSTOM: Canvas, Cursor y Botones
    ========================================== */
 
 body {
@@ -57,7 +75,7 @@ body {
   background-color: var(--background);
 }
 
-/* Lienzo del fondo animado de puntos */
+/* Lienzo del fondo animado de matriz de puntos */
 #nano-matrix-bg {
   position: fixed;
   top: 0;
@@ -90,15 +108,16 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Integración del botón flotante ("Back to top" / TOC) con los colores del tema */
+/* Botones flotantes (Back to Top y utilidades) integrados con estilo Tech */
 button[aria-label="Back to Top"],
 .back-to-top,
 #back-to-top {
   background-color: var(--background) !important;
   color: var(--accent) !important;
   border: 1px solid var(--accent) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.25s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button[aria-label="Back to Top"]:hover,
@@ -106,7 +125,8 @@ button[aria-label="Back to Top"]:hover,
 #back-to-top:hover {
   background-color: var(--accent) !important;
   color: var(--accent-foreground) !important;
-  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--accent);
+  transform: translateY(-3px);
 }
 
 /* Efecto hover fluido en títulos de posts */
