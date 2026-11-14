@@ -22,41 +22,6 @@
   }
 }
 
-/* ==========================================
-   NANO-TECH: Layout Amplio, Centrado y Limpio en PC
-   ========================================== */
-@media (min-width: 1024px) {
-  /* Ampliamos el contenedor base de la plantilla a un ancho óptimo de 64rem (~1024px) */
-  .max-w-3xl {
-    max-width: 64rem !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-  }
-
-  /* Forzamos que el contenido principal y la cabecera respiren simétricamente */
-  main#main-content, 
-  header {
-    max-width: 64rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-    box-sizing: border-box;
-  }
-
-  /* Anulamos el posicionamiento absoluto del botón "Go back" para meterlo dentro de la caja */
-  .mx-auto.max-w-3xl div:has(> a[href]),
-  div.mx-auto.max-w-3xl > a {
-    position: relative !important;
-    left: 0 !important;
-    display: inline-block !important;
-    margin-bottom: 1.5rem !important;
-  }
-}
-
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
@@ -66,7 +31,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas, Cursor y Botones
+   NANO-TECH CUSTOM: Canvas de Matriz, Cursor y Estética Tech
    ========================================== */
 
 body {
@@ -108,15 +73,21 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Botones flotantes (Back to Top y utilidades) integrados con estilo Tech */
+/* Botón flotante ("Back to Top") rediseñado con estilo Tech minimalista */
 button[aria-label="Back to Top"],
 .back-to-top,
 #back-to-top {
   background-color: var(--background) !important;
   color: var(--accent) !important;
   border: 1px solid var(--accent) !important;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(8px);
+  border-radius: 50% !important;
+  width: 42px !important;
+  height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -125,7 +96,7 @@ button[aria-label="Back to Top"]:hover,
 #back-to-top:hover {
   background-color: var(--accent) !important;
   color: var(--accent-foreground) !important;
-  box-shadow: 0 0 20px var(--accent);
+  box-shadow: 0 0 15px var(--accent);
   transform: translateY(-3px);
 }
 
