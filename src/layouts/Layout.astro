@@ -116,8 +116,41 @@ const rssHref = getAssetPath("rss.xml");
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
     <slot />
+    
+    <!-- Estela luminosa interactiva del cursor (NanoTech) -->
+    <div id="nano-cursor-glow"></div>
+
     <script>
       import "@/scripts/theme";
+
+      // Script para el seguimiento fluido del cursor con inercia
+      const cursor = document.getElementById('nano-cursor-glow');
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let cursorX = mouseX;
+      let cursorY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateCursor() {
+        let distX = mouseX - cursorX;
+        let distY = mouseY - cursorY;
+        
+        cursorX += distX * 0.15;
+        cursorY += distY * 0.15;
+        
+        if (cursor) {
+          cursor.style.left = cursorX + 'px';
+          cursor.style.top = cursorY + 'px';
+        }
+        
+        requestAnimationFrame(animateCursor);
+      }
+      
+      animateCursor();
     </script>
   </body>
 </html>
