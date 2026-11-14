@@ -23,13 +23,20 @@
 }
 
 /* ==========================================
-   NANO-TECH: Ancho amplio con márgenes simétricos
+   NANO-TECH: Ancho amplio con márgenes simétricos reales
    ========================================== */
 @media (min-width: 1024px) {
+  /* Forzamos el contenedor principal de AstroPaper a expandirse con márgenes limpios */
+  main#main-content, 
+  header, 
+  footer, 
   .max-w-3xl {
-    max-width: 1150px !important;
-    padding-left: 2.5rem !important;
-    padding-right: 2.5rem !important;
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
   }
 }
 
@@ -42,7 +49,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Fondo Animado y Efectos
+   NANO-TECH CUSTOM: Canvas de Fondo y Cursor
    ========================================== */
 
 body {
@@ -51,49 +58,18 @@ body {
   background-color: var(--background);
 }
 
-/* Fondo atmosférico con animación fluida de partículas de luz */
-body::before,
-body::after {
-  content: "";
+/* Lienzo del fondo animado de puntos */
+#nano-matrix-bg {
   position: fixed;
-  width: 45vw;
-  height: 45vw;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
   pointer-events: none;
-  filter: blur(80px);
-  opacity: 0.15;
-  animation: floatOrb 18s ease-in-out infinite alternate;
 }
 
-/* Orbe 1 (Tonos de acento según el tema) */
-body::before {
-  top: -10%;
-  left: -10%;
-  background: var(--accent);
-}
-
-/* Orbe 2 (Tonos secundarios/cianes) */
-body::after {
-  bottom: -10%;
-  right: -10%;
-  background: #38bdf8;
-  animation-delay: -9s;
-}
-
-@keyframes floatOrb {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  50% {
-    transform: translate(50px, 40px) scale(1.15);
-  }
-  100% {
-    transform: translate(-30px, 60px) scale(0.9);
-  }
-}
-
-/* Estela luminosa / Cursor tecnológico (Adaptable a ambos temas) */
+/* Estela luminosa / Cursor tecnológico */
 #nano-cursor-glow {
   pointer-events: none;
   position: fixed;
@@ -103,16 +79,15 @@ body::after {
   height: 300px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--accent) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 70%);
-  opacity: 0.18;
+  opacity: 0.15;
   transform: translate(-50%, -50%);
   transition: width 0.3s, height: 0.3s;
   z-index: 9999;
   mix-blend-mode: multiply;
 }
 
-/* En modo oscuro el blend mode cambia para que resalte con brillo */
 [data-theme="dark"] #nano-cursor-glow {
-  opacity: 0.25;
+  opacity: 0.22;
   mix-blend-mode: screen;
 }
 
