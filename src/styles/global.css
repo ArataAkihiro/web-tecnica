@@ -31,7 +31,25 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas de Matriz, Cursor y Estética Tech
+   NANO-TECH: Centrado perfecto y márgenes amplios
+   ========================================== */
+@media (min-width: 1024px) {
+  /* Envolvemos el layout principal para que respire centrado en pantallas grandes */
+  body > header,
+  body > main,
+  body > footer {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    box-sizing: border-box;
+  }
+}
+
+/* ==========================================
+   NANO-TECH CUSTOM: Canvas de Matriz, Cursor y UI
    ========================================== */
 
 body {
@@ -73,31 +91,32 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Botón flotante ("Back to Top") rediseñado con estilo Tech minimalista */
+/* Botón flotante ("Back to Top" / Utilidades) integrado con estética Tech */
 button[aria-label="Back to Top"],
 .back-to-top,
 #back-to-top {
   background-color: var(--background) !important;
   color: var(--accent) !important;
-  border: 1px solid var(--accent) !important;
-  border-radius: 50% !important;
-  width: 42px !important;
-  height: 42px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  width: 40px !important;
+  height: 40px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button[aria-label="Back to Top"]:hover,
 .back-to-top:hover,
 #back-to-top:hover {
+  border-color: var(--accent) !important;
   background-color: var(--accent) !important;
   color: var(--accent-foreground) !important;
-  box-shadow: 0 0 15px var(--accent);
-  transform: translateY(-3px);
+  box-shadow: 0 0 12px var(--accent);
+  transform: translateY(-2px);
 }
 
 /* Efecto hover fluido en títulos de posts */
