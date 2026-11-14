@@ -79,7 +79,7 @@ const rssHref = getAssetPath("rss.xml");
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
 
-    <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
+    <!-- Extra head content injected by child layouts -->
     <slot name="head" />
 
     {
@@ -91,10 +91,7 @@ const rssHref = getAssetPath("rss.xml");
       )
     }
 
-    <!--
-      Inline FOUC-prevention script: sets data-theme on <html> before
-      the browser paints. Runs synchronously, no defer/async.
-    -->
+    <!-- Inline FOUC-prevention script -->
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
@@ -105,7 +102,6 @@ const rssHref = getAssetPath("rss.xml");
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
-        // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
       })();
     </script>
@@ -115,15 +111,18 @@ const rssHref = getAssetPath("rss.xml");
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
+    <!-- Fondo animado de matriz de puntos con pulsos de luz -->
+    <canvas id="nano-matrix-bg"></canvas>
+
     <slot />
     
-    <!-- Estela luminosa interactiva del cursor (NanoTech) -->
+    <!-- Estela luminosa interactiva del cursor -->
     <div id="nano-cursor-glow"></div>
 
     <script>
       import "@/scripts/theme";
 
-      // Script para el seguimiento fluido del cursor con inercia
+      // 1. Script de la estela del cursor con inercia
       const cursor = document.getElementById('nano-cursor-glow');
       let mouseX = window.innerWidth / 2;
       let mouseY = window.innerHeight / 2;
@@ -149,8 +148,59 @@ const rssHref = getAssetPath("rss.xml");
         
         requestAnimationFrame(animateCursor);
       }
-      
       animateCursor();
+
+      // 2. Script del fondo animado tipo matriz con pulsos aleatorios
+      const canvas = document.getElementById('nano-matrix-bg') as HTMLCanvasElement;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const spacing = 35; // Distancia entre puntos de la malla
+        const dots: Array<{ x: number; y: number; alpha: number; speed: number }> = [];
+
+        for (let x = 20; x < width; x += spacing) {
+          for (let y = 20; y < height; y += spacing) {
+            dots.push({
+              x,
+              y,
+              alpha: Math.random() * 0.3,
+              speed: 0.005 + Math.random() * 0.015,
+            });
+          }
+        }
+
+        function drawMatrix() {
+          if (!ctx) return;
+          ctx.clearRect(0, 0, width, height);
+
+          // Detectar color de acento actual según el tema
+          const computedAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff6b01';
+
+          dots.forEach(dot => {
+            dot.alpha += dot.speed;
+            if (dot.alpha > 0.6 || dot.alpha < 0.05) {
+              dot.speed = -dot.speed;
+            }
+
+            ctx.fillStyle = computedAccent;
+            ctx.globalAlpha = Math.max(0.05, dot.alpha);
+            ctx.beginPath();
+            ctx.arc(dot.x, dot.y, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          requestAnimationFrame(drawMatrix);
+        }
+
+        drawMatrix();
+      }
     </script>
   </body>
 </html>
