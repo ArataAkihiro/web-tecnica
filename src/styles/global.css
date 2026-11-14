@@ -25,20 +25,11 @@
 /* ==========================================
    NANO-TECH: Forzar ancho amplio en PC
    ========================================== */
-.max-w-app, 
-main#main-content, 
-header, 
-footer {
-  max-width: 1200px !important;
-}
-
-@utility app-layout {
-  max-width: 1200px !important;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
+@media (min-width: 768px) {
+  /* Anulamos el límite estrecho por defecto de la plantilla en monitores */
+  .max-w-3xl {
+    max-width: 1200px !important;
+  }
 }
 
 @utility active-nav {
@@ -59,6 +50,7 @@ body {
   background-color: var(--background);
 }
 
+/* Fondo con gradientes atmosféricos sutiles */
 body::before {
   content: "";
   position: fixed;
