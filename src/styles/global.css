@@ -23,22 +23,23 @@
 }
 
 /* ==========================================
-   NANO-TECH: Ancho amplio y corrección de breadcrumbs
+   NANO-TECH: Ancho optimizado y corrección de elementos flotantes
    ========================================== */
 @media (min-width: 1024px) {
-  /* Contenedor general amplio y centrado simétricamente */
-  main#main-content, 
-  header, 
-  footer, 
-  .max-w-3xl,
-  .breadcrumb {
-    max-width: 1200px !important;
-    width: 100% !important;
+  /* Ancho equilibrado (max-w-4xl) para que no se rompan las posiciones absolutas */
+  .max-w-3xl {
+    max-width: 54rem !important; /* ~864px, perfecto para lectura en PC */
     margin-left: auto !important;
     margin-right: auto !important;
-    padding-left: 3rem !important;
-    padding-right: 3rem !important;
-    box-sizing: border-box;
+  }
+
+  /* Forzamos que las migas de pan y botones de retroceso se alineen correctamente */
+  .breadcrumb, 
+  div:has(> a[href*=""]) > a.hover\:opacity-75 {
+    position: relative !important;
+    left: 0 !important;
+    margin-bottom: 1rem;
+    display: inline-block;
   }
 }
 
@@ -51,7 +52,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas, Cursor y Hover
+   NANO-TECH CUSTOM: Canvas de Matriz, Cursor y Hover
    ========================================== */
 
 body {
@@ -91,7 +92,7 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Efecto hover fluido en títulos */
+/* Efecto hover fluido en títulos de posts */
 main a h2, main a h3, .post-card a {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
