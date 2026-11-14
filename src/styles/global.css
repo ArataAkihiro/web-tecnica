@@ -23,12 +23,13 @@
 }
 
 /* ==========================================
-   NANO-TECH: Forzar ancho amplio en PC
+   NANO-TECH: Ancho amplio con márgenes simétricos
    ========================================== */
-@media (min-width: 768px) {
-  /* Anulamos el límite estrecho por defecto de la plantilla en monitores */
+@media (min-width: 1024px) {
   .max-w-3xl {
-    max-width: 1200px !important;
+    max-width: 1150px !important;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
 }
 
@@ -41,7 +42,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Fondo vivo y efectos Glow
+   NANO-TECH CUSTOM: Fondo, Cursor y Hover
    ========================================== */
 
 body {
@@ -50,7 +51,7 @@ body {
   background-color: var(--background);
 }
 
-/* Fondo con gradientes atmosféricos sutiles */
+/* Fondo atmosférico avanzado con patrón de puntos tipo matriz */
 body::before {
   content: "";
   position: fixed;
@@ -59,25 +60,45 @@ body::before {
   width: 100vw;
   height: 100vh;
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(255, 107, 1, 0.05) 0%, transparent 40%);
+    radial-gradient(rgba(255, 107, 1, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%);
+  background-size: 24px 24px, 100% 100%;
   z-index: -1;
   pointer-events: none;
 }
 
-/* Efecto hover tecnológico en tarjetas y enlaces */
-a, article, .post-card {
+/* Estela luminosa / Cursor tecnológico */
+#nano-cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 1, 0.12) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+/* Efecto hover tecnológico fluido en los títulos de los posts */
+main a h2, main a h3, .post-card a {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-li:has(> a), .border-skin-line {
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+main a:hover h2, main a:hover h3 {
+  color: var(--accent) !important;
+  transform: translateX(4px);
+  text-shadow: 0 0 10px rgba(255, 107, 1, 0.3);
 }
 
-li:has(> a):hover {
+/* Elevación sutil de los bloques de artículos */
+li {
+  transition: transform 0.2s ease;
+}
+
+li:hover {
   transform: translateY(-2px);
-}
-
-main a:not(.no-underline):hover {
-  text-shadow: 0 0 8px rgba(255, 107, 1, 0.4);
 }
