@@ -23,20 +23,22 @@
 }
 
 /* ==========================================
-   NANO-TECH: Ancho amplio con márgenes simétricos reales
+   NANO-TECH: Ancho amplio y corrección de breadcrumbs
    ========================================== */
 @media (min-width: 1024px) {
-  /* Forzamos el contenedor principal de AstroPaper a expandirse con márgenes limpios */
+  /* Contenedor general amplio y centrado simétricamente */
   main#main-content, 
   header, 
   footer, 
-  .max-w-3xl {
+  .max-w-3xl,
+  .breadcrumb {
     max-width: 1200px !important;
     width: 100% !important;
     margin-left: auto !important;
     margin-right: auto !important;
     padding-left: 3rem !important;
     padding-right: 3rem !important;
+    box-sizing: border-box;
   }
 }
 
@@ -49,7 +51,7 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas de Fondo y Cursor
+   NANO-TECH CUSTOM: Canvas, Cursor y Hover
    ========================================== */
 
 body {
@@ -58,7 +60,6 @@ body {
   background-color: var(--background);
 }
 
-/* Lienzo del fondo animado de puntos */
 #nano-matrix-bg {
   position: fixed;
   top: 0;
@@ -69,7 +70,6 @@ body {
   pointer-events: none;
 }
 
-/* Estela luminosa / Cursor tecnológico */
 #nano-cursor-glow {
   pointer-events: none;
   position: fixed;
@@ -91,7 +91,7 @@ body {
   mix-blend-mode: screen;
 }
 
-/* Efecto hover tecnológico fluido en títulos y enlaces */
+/* Efecto hover fluido en títulos */
 main a h2, main a h3, .post-card a {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -102,7 +102,6 @@ main a:hover h2, main a:hover h3 {
   text-shadow: 0 0 10px var(--accent);
 }
 
-/* Elevación sutil de las tarjetas de artículos */
 li {
   transition: transform 0.2s ease;
 }
