@@ -5,140 +5,35 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-html {
-  overflow-y: scroll;
-  color-scheme: light;
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
+  }
+  a,
+  button,
+  #main-content {
+    @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
-html.dark {
-  color-scheme: dark;
+@utility max-w-app {
+  @apply max-w-3xl;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
+@utility app-layout {
+  @apply max-w-app mx-auto w-full px-4;
 }
 
-body {
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background);
-  color: var(--foreground);
-  position: relative;
-  overflow-x: hidden;
+@utility active-nav {
+  @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  padding: 1.25rem 0;
-  background-color: var(--background);
-  opacity: 0.85;
-  backdrop-filter: blur(8px);
-}
-
-main {
-  flex: 1;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-}
-
-footer {
-  padding: 1.25rem 0;
-  font-size: 0.875rem;
-}
-
-article {
-  max-width: 100%;
-}
-
-article a {
-  font-family: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.3s ease;
-}
-
-article a:hover {
-  color: var(--accent);
-}
-
-.animate {
-  opacity: 0;
-  transform: translateY(0.75rem);
-  transition: all 0.7s cubic-bezier(0, 0, 0.2, 1);
-}
-
-.animate.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-html #back-to-top {
-  opacity: 0;
-  pointer-events: none;
-}
-
-html.scrolled #back-to-top {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ==========================================
-   CAMBIOS ESTÉTICOS PUROS (Matriz y Cursor)
-   ========================================== */
-
-#nano-matrix-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-}
-
-#nano-cursor-glow {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 70%);
-  opacity: 0.15;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s, height: 0.3s;
-  z-index: 9999;
-  mix-blend-mode: multiply;
-}
-
-[data-theme="dark"] #nano-cursor-glow {
-  opacity: 0.22;
-  mix-blend-mode: screen;
-}
-
-main a h2, main a h3, .post-card a {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-main a:hover h2, main a:hover h3 {
-  color: var(--accent) !important;
-  transform: translateX(4px);
-  text-shadow: 0 0 10px var(--accent);
-}
-
-li {
-  transition: transform 0.2s ease;
-}
-
-li:hover {
-  transform: translateY(-2px);
+:target {
+  scroll-margin-block: 1rem;
 }
