@@ -76,9 +76,10 @@ const rssHref = getAssetPath("rss.xml");
       href={new URL(rssHref, Astro.site)}
     />
 
-    <!-- Filled at runtime by theme.ts -->
+    <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
 
+    <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />
 
     {
@@ -90,7 +91,10 @@ const rssHref = getAssetPath("rss.xml");
       )
     }
 
-    <!-- Inline FOUC-prevention script -->
+    <!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously, no defer/async.
+    -->
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
@@ -101,6 +105,7 @@ const rssHref = getAssetPath("rss.xml");
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
+        // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
       })();
     </script>
@@ -110,103 +115,9 @@ const rssHref = getAssetPath("rss.xml");
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
-    <!-- Fondo animado de matriz de puntos (Global y persistente) -->
-    <canvas id="nano-matrix-bg"></canvas>
-
     <slot />
-    
-    <!-- Estela luminosa interactiva del cursor -->
-    <div id="nano-cursor-glow"></div>
-
     <script>
       import "@/scripts/theme";
-
-      function initNanoTechUI() {
-        // 1. Estela del cursor con inercia
-        const cursor = document.getElementById('nano-cursor-glow');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let cursorX = mouseX;
-        let cursorY = mouseY;
-
-        const onMouseMove = (e: MouseEvent) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-        };
-        window.addEventListener('mousemove', onMouseMove);
-
-        let animationFrameId: number;
-        function animateCursor() {
-          let distX = mouseX - cursorX;
-          let distY = mouseY - cursorY;
-          
-          cursorX += distX * 0.15;
-          cursorY += distY * 0.15;
-          
-          if (cursor) {
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-          }
-          
-          animationFrameId = requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // 2. Fondo animado de matriz de puntos (Canvas)
-        const canvas = document.getElementById('nano-matrix-bg') as HTMLCanvasElement;
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          let width = (canvas.width = window.innerWidth);
-          let height = (canvas.height = window.innerHeight);
-
-          const onResize = () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-          };
-          window.addEventListener('resize', onResize);
-
-          const spacing = 35;
-          const dots: Array<{ x: number; y: number; alpha: number; speed: number }> = [];
-
-          for (let x = 20; x < width; x += spacing) {
-            for (let y = 20; y < height; y += spacing) {
-              dots.push({
-                x,
-                y,
-                alpha: Math.random() * 0.3,
-                speed: 0.005 + Math.random() * 0.015,
-              });
-            }
-          }
-
-          let matrixFrameId: number;
-          function drawMatrix() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, width, height);
-
-            const computedAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff6b01';
-
-            dots.forEach(dot => {
-              dot.alpha += dot.speed;
-              if (dot.alpha > 0.6 || dot.alpha < 0.05) {
-                dot.speed = -dot.speed;
-              }
-
-              ctx.fillStyle = computedAccent;
-              ctx.globalAlpha = Math.max(0.05, dot.alpha);
-              ctx.beginPath();
-              ctx.arc(dot.x, dot.y, 1.5, 0, Math.PI * 2);
-              ctx.fill();
-            });
-
-            matrixFrameId = requestAnimationFrame(drawMatrix);
-          }
-          drawMatrix();
-        }
-      }
-
-      // Ejecutar al cargar la primera vez y tras cada transición de página de Astro
-      document.addEventListener('astro:page-load', initNanoTechUI);
     </script>
   </body>
 </html>
