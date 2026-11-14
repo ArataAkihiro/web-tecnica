@@ -37,3 +37,50 @@
 :target {
   scroll-margin-block: 1rem;
 }
+
+:target {
+  scroll-margin-block: 1rem;
+}
+
+/* ==========================================
+   NANO-TECH CUSTOM: Fondo vivo y efectos Glow
+   ========================================== */
+
+/* 1. Efecto de malla / gradiente tecnológico sutil en el fondo */
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 2. Efecto hover tecnológico en tarjetas y enlaces principales */
+a, article, .post-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Brillo perimetral y elevación al pasar el ratón por los posts */
+li:has(> a), .border-skin-line {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+li:has(> a):hover {
+  transform: translateY(-2px);
+}
+
+/* Estilo para enlaces con destello sutil */
+main a:not(.no-underline):hover {
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
