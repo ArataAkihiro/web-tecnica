@@ -31,14 +31,37 @@
 }
 
 /* ==========================================
-   NANO-TECH CUSTOM: Canvas, Cursor y Efectos
+   ESTRUCTURA NATIVA CENTRADA (AstroPaper)
    ========================================== */
 
 body {
   position: relative;
   overflow-x: hidden;
   background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
+
+/* Forzamos que la cabecera y el contenido principal usen los contenedores centrados de la plantilla */
+header, main, footer {
+  width: 100%;
+  max-width: 48rem; /* Ancho nativo exacto de AstroPaper (max-w-3xl) */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
+}
+
+header {
+  max-width: none !important; /* La barra de navegación superior ocupa todo el ancho pero su contenido interno va centrado */
+}
+
+/* ==========================================
+   NANO-TECH CUSTOM: Canvas, Cursor y Efectos
+   ========================================== */
 
 /* Lienzo del fondo animado de matriz de puntos con pulsos */
 #nano-matrix-bg {
